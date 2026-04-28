@@ -9,6 +9,7 @@ public class ItunesResult {
     public String artistName;
     public String collectionName;
     public String artworkUrl100;
-    public double trackTimeMillis;
-
+    public long trackTimeMillis;
+    public String primaryGenreName;
+    public String country;
 }

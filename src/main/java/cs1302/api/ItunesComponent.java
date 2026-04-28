@@ -20,6 +20,10 @@ import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.image.ImageView;
+import javafx.scene.control.Label;
+
+
+
 /**
  * A custom component for searching the iTunes Store.
  * Extends VBox to serve as a self-contained UI module.
@@ -29,6 +33,7 @@ public class ItunesComponent extends VBox {
     private TextField searchField;
     private Button searchButton;
     private VBox resultsContainer;
+    private Label selectionLabel;
 
     /**
      * Constructs the ItunesComponent and initializes its children.
@@ -44,8 +49,16 @@ public class ItunesComponent extends VBox {
         searchButton = new Button("Search");
         resultsContainer = new VBox(5);
 
+        ScrollPane scrollPane = new ScrollPane(resultsContainer);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setPrefHeight(300);
+
+        this.selectionLabel = new Label("Select a song to see details");
+        this.selectionLabel.setWrapText(true);
+        this.selectionLabel.setStyle("-fx-background-color: #f4f4f4; -fx-padding: 10;");
         // Add nodes to this VBox
-        this.getChildren().addAll(title, searchField, searchButton, resultsContainer);
+        this.getChildren().addAll(title, searchField, searchButton, resultsContainer,
+                                  selectionLabel, scrollPane);
         searchButton.setOnAction(e -> {
             String term = searchField.getText();
 
@@ -92,27 +105,28 @@ public class ItunesComponent extends VBox {
 
     /**
        Displays search results.
+       @param response the itunes response
      */
     private void displayResults(ItunesResponse response) {
         resultsContainer.getChildren().clear(); // Wipe the old search
-
+        selectionLabel.setVisible(true);
         if (response != null && response.results != null) {
             for (ItunesResult result : response.results) {
-                // 1. Create a horizontal container for the 'Row'
-                HBox songRow = new HBox(10);
-                songRow.setStyle("-fx-padding: 5; -fx-border-color: #ddd; -fx-background-color: white;");
 
-                // 2. Load the image from the URL
-                // The 'true' parameter tells JavaFX to load it in the background
+                HBox songRow = new HBox(10);
+                songRow.setStyle("-fx-padding: 5; -fx-border-color: #ddd;" +
+                                 "-fx-background-color: white;");
+
+                // Load the image from the URL
+
                 Image image = new Image(result.artworkUrl100, true);
                 ImageView albumArt = new ImageView(image);
 
-                // 3. Size the image so it doesn't take over the screen
                 albumArt.setFitHeight(60);
                 albumArt.setFitWidth(60);
                 albumArt.setPreserveRatio(true);
 
-                // 4. Create the text container
+                // the text container
                 VBox textInfo = new VBox(2);
                 Label title = new Label(result.trackName);
                 title.setStyle("-fx-font-weight: bold;");
@@ -120,13 +134,48 @@ public class ItunesComponent extends VBox {
 
                 textInfo.getChildren().addAll(title, artist);
 
-                // 5. Add artwork and text to the row
+                // Add artwork and text to the row
                 songRow.getChildren().addAll(albumArt, textInfo);
 
-                // 6. Add the row to your resultsContainer
+
+                songRow.setOnMouseClicked(event -> {
+
+                    handleResultClick(result);
+                });
                 resultsContainer.getChildren().add(songRow);
-            }
-        }
+            } //for
+
+
+        } //if
     } //displayResults
 
-    } //ItunesComponent
+
+    /**
+       Prints the song information in a nice format.
+       @param result the itunes result clicked
+     */
+    private void handleResultClick(ItunesResult result) {
+
+        long totalSeconds = result.trackTimeMillis / 1000;
+        long minutes = totalSeconds / 60;
+        long seconds = totalSeconds % 60;
+        String duration = String.format("%d:%02d", minutes, seconds);
+
+        String details = String.format(
+            "Selected: %s\n" +
+            "Artist: %s\n" +
+            "Genre: %s | Country: %s\n" +
+            "Duration: %s (%d total seconds)",
+            result.trackName,
+            result.artistName,
+            result.primaryGenreName,
+            result.country,
+            duration,
+            totalSeconds
+        );
+
+        selectionLabel.setText(details);
+
+
+    }
+} //ItunesComponent
