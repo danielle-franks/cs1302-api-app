@@ -7,8 +7,9 @@ package cs1302.api;
 public class ItunesResult {
     public String trackName;
     public String artistName;
-    public String albumName;
+    public String collectionName;
     public String artworkUrl100;
-    public double trackTimeMillis;
-
+    public long trackTimeMillis;
+    public String primaryGenreName;
+    public String country;
 }

@@ -8,13 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.net.http.HttpResponse.BodyHandlers;
-import java.net.URI;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+
 
 /**
  *This app allows the user to look up songs/albums/artists on Itunes. The user will
@@ -39,22 +33,14 @@ public class ApiApp extends Application {
     public void start(Stage stage) {
 
         this.stage = stage;
+        ItunesComponent itunes = new ItunesComponent();
 
-        // demonstrate how to load local asset using "file:resources/"
-        Image bannerImage = new Image("file:resources/readme-banner.png");
-        ImageView banner = new ImageView(bannerImage);
-        banner.setPreserveRatio(true);
-        banner.setFitWidth(640);
 
-        // some labels to display information
-        Label notice = new Label("Modify the starter code to suit your needs.");
+        root.getChildren().add(itunes);
 
-        // setup scene
-        root.getChildren().addAll(banner, notice);
-        scene = new Scene(root);
+        scene = new Scene(root, 800, 600);
+        stage.setTitle("iTunes Search");
 
-        // setup stage
-        stage.setTitle("ApiApp!");
         stage.setScene(scene);
         stage.setOnCloseRequest(event -> Platform.exit());
         stage.sizeToScene();
@@ -62,34 +48,4 @@ public class ApiApp extends Application {
 
     } // start
 
-
-    /**
-     * Sends a request to the iTunes Search API and returns the response object.
-     * @param term The search term entered by the user.
-     * @return An ItunesResponse object containing the results.
-     */
-    public ItunesResponse queryItunes(String term) {
-        try {
-
-            String url = "https://itunes.apple.com/search?term=" +
-                term.replace(" ", "+") + "&limit=10";
-
-
-            HttpClient client = HttpClient.newHttpClient();
-            HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .build();
-
-
-            HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
-
-
-            Gson gson = new Gson();
-            return gson.fromJson(response.body(), ItunesResponse.class);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 } // ApiApp
