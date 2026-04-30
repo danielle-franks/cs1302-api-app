@@ -120,33 +120,32 @@ public class LyricsComponent extends VBox {
             "&track_name=" + song.replace(" ", "+") +
             "&album_name=" + album.replace(" ", "+") +
             "&duration=" + duration;
-        Thread t = new Thread(() -> {
-            try {
-                HttpClient client = HttpClient.newHttpClient();
-                HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(url))
-                    .build();
 
-                // The simple "iTunes style" send
-                HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
+        try {
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .build();
 
-                Gson gson = new Gson();
-                LyricsResponse lyricsRes = gson.fromJson(response.body(), LyricsResponse.class);
 
-                // 4. Update the UI back on the main thread
-                Platform.runLater(() -> {
-                    if (lyricsRes != null && lyricsRes.plainLyrics != null) {
-                        lyricsDisplay.setText(lyricsRes.plainLyrics);
-                    } else {
-                        lyricsDisplay.setText("No lyrics found for this version.");
-                    }
-                });
+            HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
 
-            } catch (Exception e) {
-                Platform.runLater(() -> lyricsDisplay.setText("Error: " + e.getMessage()));
+            Gson gson = new Gson();
+            LyricsResponse lyricsRes = gson.fromJson(response.body(), LyricsResponse.class);
+
+
+
+            if (lyricsRes != null && lyricsRes.plainLyrics != null) {
+                lyricsDisplay.setText(lyricsRes.plainLyrics);
+            } else {
+                lyricsDisplay.setText("No lyrics found for this version.");
             }
-        });
-        t.start();
+
+
+        } catch (Exception e) {
+            Platform.runLater(() -> lyricsDisplay.setText("Error: " + e.getMessage()));
+        }
+
     }
 
 
