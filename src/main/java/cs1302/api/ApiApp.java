@@ -8,7 +8,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 
 /**
  *This app allows the user to look up songs/albums/artists on Itunes. The user will
@@ -34,11 +35,17 @@ public class ApiApp extends Application {
 
         this.stage = stage;
         ItunesComponent itunes = new ItunesComponent();
+        LyricsComponent lyrics = new LyricsComponent();
+
+        itunes.setLyricsBridge(lyrics);
+
+        HBox mainLayout = new HBox(20);
+        HBox.setHgrow(itunes, Priority.ALWAYS);
+        HBox.setHgrow(lyrics, Priority.ALWAYS);
+        mainLayout.getChildren().addAll(itunes, lyrics);
 
 
-        root.getChildren().add(itunes);
-
-        scene = new Scene(root, 800, 600);
+        scene = new Scene(mainLayout, 1100, 700);
         stage.setTitle("iTunes Search");
 
         stage.setScene(scene);
