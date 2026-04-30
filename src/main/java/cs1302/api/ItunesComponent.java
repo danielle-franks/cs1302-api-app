@@ -34,6 +34,9 @@ public class ItunesComponent extends VBox {
     private Button searchButton;
     private VBox resultsContainer;
     private Label selectionLabel;
+    private ItunesResult selectedResult;
+    private Button bridgeButton;
+    private LyricsComponent lyricsBridge;
 
     /**
      * Constructs the ItunesComponent and initializes its children.
@@ -51,7 +54,9 @@ public class ItunesComponent extends VBox {
 
         ScrollPane scrollPane = new ScrollPane(resultsContainer);
         scrollPane.setFitToWidth(true);
+        this.setMaxWidth(Double.MAX_VALUE);
         scrollPane.setPrefHeight(300);
+        searchField.setPrefWidth(500);
 
         this.selectionLabel = new Label("Select a song to see details");
         this.selectionLabel.setWrapText(true);
@@ -65,6 +70,26 @@ public class ItunesComponent extends VBox {
 
             if (term != null && !term.trim().isEmpty()) {
                 this.queryItunes(term);
+            }
+        });
+
+        this.bridgeButton = new Button("Use this Song for Lyrics");
+        this.bridgeButton.setVisible(false);
+        this.bridgeButton.setManaged(false);
+
+        // Add it to the layout after the selectionLabel
+        this.getChildren().add(bridgeButton);
+
+        // Set the action: This is the ONLY place the bridge happens now
+        bridgeButton.setOnAction(e -> {
+            if (selectedResult != null && lyricsBridge != null) {
+                long totalSeconds = selectedResult.trackTimeMillis / 1000;
+                lyricsBridge.setFields(
+                    selectedResult.artistName,
+                    selectedResult.trackName,
+                    selectedResult.collectionName,
+                    totalSeconds
+                );
             }
         });
     }
@@ -106,7 +131,7 @@ public class ItunesComponent extends VBox {
     /**
        Displays search results.
        @param response the itunes response
-     */
+    */
     private void displayResults(ItunesResponse response) {
         resultsContainer.getChildren().clear(); // Wipe the old search
         selectionLabel.setVisible(true);
@@ -139,7 +164,14 @@ public class ItunesComponent extends VBox {
 
 
                 songRow.setOnMouseClicked(event -> {
+                    for (javafx.scene.Node node : resultsContainer.getChildren()) {
+                        node.setStyle("-fx-padding: 5; -fx-border-color:" +
+                                      " #ddd; -fx-background-color: white;");
+                    }
 
+                    // highlight the clicked row
+                    songRow.setStyle("-fx-padding: 5; -fx-border-color: #007bff; " +
+                                     "-fx-border-width: 2; -fx-background-color: #e7f3ff;");
                     handleResultClick(result);
                 });
                 resultsContainer.getChildren().add(songRow);
@@ -155,6 +187,7 @@ public class ItunesComponent extends VBox {
        @param result the itunes result clicked
      */
     private void handleResultClick(ItunesResult result) {
+        this.selectedResult = result;
 
         long totalSeconds = result.trackTimeMillis / 1000;
         long minutes = totalSeconds / 60;
@@ -176,6 +209,16 @@ public class ItunesComponent extends VBox {
 
         selectionLabel.setText(details);
 
+        bridgeButton.setVisible(true);
+        bridgeButton.setManaged(true);
+    }
 
+
+    /**
+       Connects Lyrics to Itunes.
+       @param bridge the bridge
+     */
+    public void setLyricsBridge(LyricsComponent bridge) {
+        this.lyricsBridge = bridge;
     }
 } //ItunesComponent
