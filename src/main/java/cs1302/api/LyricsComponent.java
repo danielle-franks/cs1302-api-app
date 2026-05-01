@@ -42,7 +42,16 @@ public class LyricsComponent extends VBox {
         Label title = new Label("Lyrics Finder");
         title.setStyle("-fx-font-weight: bold; -fx-font-size: 1.2em;");
 
+        Label instruction = new Label(
+            "Select a song from iTunes and click 'Use this Song', " +
+            "or type the details manually below.");
 
+        instruction.setWrapText(true);
+        instruction.setStyle("-fx-text-fill: #555; -fx-font-style:" +
+                             " italic; -fx-text-alignment: center;");
+        instruction.setMaxWidth(400);
+        instruction.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
+        instruction.prefWidthProperty().bind(this.widthProperty());
         artistField = new TextField();
         artistField.setPromptText("Artist Name...");
 
@@ -67,11 +76,12 @@ public class LyricsComponent extends VBox {
         lyricsDisplay.setEditable(false);
         lyricsDisplay.setPromptText("Lyrics will appear here...");
         lyricsDisplay.setWrapText(true);
-        lyricsDisplay.setPrefHeight(350);
+        lyricsDisplay.setPrefHeight(300);
 
         // add all components to the layout
         this.getChildren().addAll(
             title,
+            instruction,
             new Label("Artist:"), artistField,
             new Label("Song:"), songField,
             new Label("Album:"), albumField,

@@ -47,8 +47,9 @@ public class ItunesComponent extends VBox {
         this.setStyle("-fx-padding: 10; -fx-border-color: lightgray; -fx-border-width: 2;");
 
         Label title = new Label("iTunes Media Search");
+        Label searchLabel = new Label("Search for a song: ");
         searchField = new TextField();
-        searchField.setPromptText("Search for a song...");
+
         searchButton = new Button("Search");
         resultsContainer = new VBox(5);
 
@@ -62,7 +63,7 @@ public class ItunesComponent extends VBox {
         this.selectionLabel.setWrapText(true);
         this.selectionLabel.setStyle("-fx-background-color: #f4f4f4; -fx-padding: 10;");
         // Add nodes to this VBox
-        this.getChildren().addAll(title, searchField, searchButton, resultsContainer,
+        this.getChildren().addAll(title, searchLabel, searchField, searchButton, resultsContainer,
                                   selectionLabel, scrollPane);
         searchButton.setOnAction(e -> {
             String term = searchField.getText();
@@ -197,10 +198,12 @@ public class ItunesComponent extends VBox {
         String details = String.format(
             "Selected: %s\n" +
             "Artist: %s\n" +
+            "Album: %s\n" +
             "Genre: %s | Country: %s\n" +
             "Duration: %s (%d total seconds)",
             result.trackName,
             result.artistName,
+            result.collectionName,
             result.primaryGenreName,
             result.country,
             duration,

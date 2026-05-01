@@ -12,9 +12,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 
 /**
- *This app allows the user to look up songs/albums/artists on Itunes. The user will
+ *This app allows the user to look up a song on Itunes. The user will
  recieve a list of matches. The user can automatically copy a search result's
- info over to the lyric lookup, or can choose to look up a different song.
+ info over to the lyric lookup, or can manually look up the lyrics for a song
+ without first using the Itunes search.
  */
 public class ApiApp extends Application {
     Stage stage;

@@ -7,5 +7,5 @@ public class LyricsResponse {
     public String plainLyrics; // This is the field we want to display
     public String trackName;
     public String artistName;
-    public int duration;
+    public double duration;
 } //LyricsResponse
