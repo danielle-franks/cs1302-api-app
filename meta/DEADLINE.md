@@ -37,13 +37,13 @@ https://github.com/danielle-franks/cs1302-api-app
 ### API 1
 
 ```
-https://.../replace/me
+
 
 https://itunes.apple.com/search?term=sick+love&limit=10&media=music&entity=song
 ```
 
 ```json
-{ replace with json }
+
 
 {
  "resultCount":10,
@@ -73,24 +73,24 @@ https://itunes.apple.com/search?term=sick+love&limit=10&media=music&entity=song
 
 
 ```
-> Replace this line with notes (if needed) or remove it (if not needed).
+
 
 ### API 2
 
 ```
-https://../replace/me
+
 
 https://lrclib.net/api/get?artist_name=Red+Hot+Chili+Peppers&track_name=Sick+Love&album_name=The+Getaway&duration=221
 ```
 
 ```json
-{ replace with json }
+
 
 
 {"id":1049219,"name":"Sick Love","trackName":"Sick Love","artistName":"Red Hot Chili Peppers","albumName":"The Getaway","duration":221.0,"instrumental":false,"plainLyrics":"Say goodbye to Oz and everything you own\nCalifornia dreamin' is a Pettibon\nLA's screaming you're my home\nVanity is blasted but it's rarely fair\nI could smell the Prozac in your pretty hair\nGot a lot of friends, but is anyone there\n\nI don't know but it's been said\nYour heart is stronger than your head\nAnd this location is my home\n\nStick n move you're living in a quick world\nGot a heavy laugh for such a tiny girl\nBorn into it that's for sure\n\nRivers get connected so much stronger than expected well\nSick love comes to wash us away\nPrisons of perspective\nHow your vision gets corrected and\nSick love is my modern cliche\n\nPeople talk and tell you what you want to hear\nDo you really need another souvenir\nSuper heroes tend to disappear\nFame is just a trick you see an empty glass\nLeave you feeling thirsty and so very fast\nChase your tail my baby it'll be your last\n\nI don't know but it's been said\nYour heart is stronger than your head\nAnd this location is my home\n\nRivers get connected so much stronger than expected well\nSick love comes to wash us away\nPrisons of perspective\nHow your vision gets corrected and\nSick love is my modern cliche\n\nRivers get connected so much stronger than expected well\nSick love comes to wash us away\nPrisons of perspective\nHow your vision gets corrected and\nSick love is my modern cliche\n\nOpenly defective is the lover you elected and\nA portrait she was bound to portray","syncedLyrics":"[00:14.76] Say goodbye to Oz and everything you own\n[00:18.29] California dreamin' is a Pettibon\n[00:21.47] LA's screaming you're my home\n[00:27.75] Vanity is blasted but it's rarely fair\n[00:31.18] I could smell the Prozac in your pretty hair\n[00:34.24] Got a lot of friends, but is anyone there\n[00:40.82] I don't know but it's been said\n[00:44.32] Your heart is stronger than your head\n[00:47.68] And this location is my home\n[00:53.87] Stick n move you're living in a quick world\n[00:57.24] Got a heavy laugh for such a tiny girl\n[01:00.56] Born into it that's for sure\n[01:06.75] Rivers get connected so much stronger than expected well\n[01:13.14] Sick love comes to wash us away\n[01:19.40] Prisons of perspective\n[01:22.36] How your vision gets corrected and\n[01:25.91] Sick love is my modern cliche\n[01:31.17] People talk and tell you what you want to hear\n[01:34.53] Do you really need another souvenir\n[01:37.88] Super heroes tend to disappear\n[01:43.81] Fame is just a trick you see an empty glass\n[01:47.54] Leave you feeling thirsty and so very fast\n[01:50.72] Chase your tail my baby it'll be your last\n[01:57.01] I don't know but it's been said\n[02:00.56] Your heart is stronger than your head\n[02:04.06] And this location is my home\n[02:10.35] Rivers get connected so much stronger than expected well\n[02:16.51] Sick love comes to wash us away\n[02:23.07] Prisons of perspective\n[02:25.63] How your vision gets corrected and\n[02:29.59] Sick love is my modern cliche\n[02:35.53] \n[03:01.73] Rivers get connected so much stronger than expected well\n[03:08.12] Sick love comes to wash us away\n[03:14.47] Prisons of perspective\n[03:17.19] How your vision gets corrected and\n[03:21.10] Sick love is my modern cliche\n[03:27.41] Openly defective is the lover you elected and\n[03:34.12] A portrait she was bound to portray\n[03:37.93] ","lyricsfile":null}
 ```
 
-> Replace this line with notes (if needed) or remove it (if not needed).
+> From the API's website: "Each time you request a new track's signature, this API will attempt to access external sources in case the lyrics are not found in the internal database. Therefore, the response time will vary significantly." A few seconds of loading time are to be expected.
 
 ## Part 2: New
 

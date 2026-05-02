@@ -81,7 +81,7 @@ public class ItunesComponent extends VBox {
         // Add it to the layout after the selectionLabel
         this.getChildren().add(bridgeButton);
 
-        // Set the action: This is the ONLY place the bridge happens now
+
         bridgeButton.setOnAction(e -> {
             if (selectedResult != null && lyricsBridge != null) {
                 long totalSeconds = selectedResult.trackTimeMillis / 1000;
